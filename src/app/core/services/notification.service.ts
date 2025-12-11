@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Notification } from '../models/notification.model';
+import { tap } from 'rxjs/operators';
+import { Auth } from '@angular/fire/auth';
+
 
 const today = new Date();
 const yesterday = new Date();
@@ -26,7 +29,7 @@ const MOCK_NOTIFICATIONS: Notification[] = [
     id: '2',
     type: 'success',
     title: 'Item Posted Successfully',
-    description: 'Your listing for "Blue Backpack" is now live. We\'ll notify you when we find a match.',
+    description: 'Your listing for \"Blue Backpack\" is now live. We\'ll notify you when we find a match.',
     time: '5h ago',
     date: today,
     read: false,
@@ -66,7 +69,28 @@ const MOCK_NOTIFICATIONS: Notification[] = [
   providedIn: 'root'
 })
 export class NotificationService {
+  
+  notifications = signal<Notification[]>([]);
+  private auth: Auth = inject(Auth);
+
+  constructor() {
+    this.getNotifications().subscribe();
+  }
+  
   getNotifications(): Observable<Notification[]> {
-    return of(MOCK_NOTIFICATIONS);
+    return of(MOCK_NOTIFICATIONS).pipe(
+        tap(data => this.notifications.set(data))
+    );
+  }
+
+  async markAllAsRead() {
+    const uid = this.auth.currentUser?.uid;
+    if (!uid) return;
+
+    // Logic to update all documents in Firestore where read == false
+    // For now, we can just console log if you haven't written the backend update yet
+    console.log('Marking all as read for user:', uid);
+    
+    // TODO: Implement Firestore batch update here
   }
 }

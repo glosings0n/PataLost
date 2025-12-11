@@ -1,5 +1,5 @@
 {
-  "name": "PataLost - AI Lost & Found",
-  "description": "An AI-powered platform to help you find your lost items. Report a lost item, and our AI will help match it with found items. This is the initial setup for the Progressive Web App (PWA).",
+  "name": "PataLost",
+  "description": "An AI-powered platform to help you find your lost items. Report a lost item, and our AI will help match it with found items.",
   "requestFramePermissions": []
 }

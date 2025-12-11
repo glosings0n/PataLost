@@ -1,0 +1,25 @@
+:root {
+  --primary-color: #137fec;
+  --secondary-color: #f0f4ff;
+  --background-light: #f6f7f8;
+  --background-subtle: #f8f9fa;
+  --background-dark: #101922;
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --action-red: #ef4444;
+  --action-green: #22c55e;
+  --border-color: #e5e7eb;
+  --font-family-sans: "Fredoka", sans-serif;
+  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
+  --shadow-hover:
+    0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --border-radius-default: 1rem;
+  --border-radius-lg: 2rem;
+  --border-radius-xl: 3rem;
+
+  /* New variables for responsive design */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+}

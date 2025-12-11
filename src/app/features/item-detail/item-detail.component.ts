@@ -1,46 +1,49 @@
-import { Component, ChangeDetectionStrategy, inject, input, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
-import { ItemService } from '../../core/services/item.service';
-import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { PLACEHOLDER_IMAGE_URL } from '../../core/constants';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  Input,
+  signal,
+  OnInit,
+} from "@angular/core";
+import { CommonModule } from "@angular/common";
+import { ItemService } from "../../core/services/item.service";
+import { RecentItem } from "../../core/models/recent-item.model";
+import { firstValueFrom } from "rxjs";
+import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-item-detail',
+  selector: "app-item-detail",
   standalone: true,
-  imports: [RouterLink],
-  templateUrl: './item-detail.component.html',
-  styles: `
-    .material-symbols-outlined {
-      font-variation-settings:
-      'FILL' 0,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 24
-    }
-  `,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  imports: [CommonModule, RouterLink],
+  templateUrl: "./item-detail.component.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ItemDetailComponent {
+export class ItemDetailComponent implements OnInit {
+  @Input() id: string = "";
+
   private itemService = inject(ItemService);
-  
-  id = input<string>();
-  placeholderUrl = PLACEHOLDER_IMAGE_URL;
+
+  item = signal<RecentItem | null>(null);
   isZoomed = signal(false);
+  placeholderUrl = "https://via.placeholder.com/400x300";
 
-  private item$ = toObservable(this.id).pipe(
-    switchMap(id => {
-      if (id) {
-        return this.itemService.getItemById(id);
-      }
-      return of(undefined);
-    })
-  );
+  ngOnInit() {
+    if (this.id) {
+      this.loadItem(this.id);
+    }
+  }
 
-  item = toSignal(this.item$);
+  toggleZoom() {
+    this.isZoomed.set(!this.isZoomed());
+  }
 
-  toggleZoom(): void {
-    this.isZoomed.update(v => !v);
+  private async loadItem(id: string) {
+    try {
+      const data = await firstValueFrom(this.itemService.getItemById(id));
+      this.item.set(data || null);
+    } catch (error) {
+      console.error("Error loading item", error);
+    }
   }
 }
