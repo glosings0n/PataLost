@@ -1,0 +1,61 @@
+<header class="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center gap-2 cursor-pointer">
+        <div class="flex items-center justify-center size-9 rounded-xl bg-primary text-white shadow-md shadow-primary/20">
+          <span class="material-symbols-outlined text-xl">travel_explore</span>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-gray-900">HomeHub</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-8">
+        <a class="text-sm font-semibold text-gray-900" routerLink="/">Home</a>
+        <a class="text-sm font-medium text-gray-500 hover:text-primary transition-colors" href="#">My Items</a>
+        <a class="text-sm font-medium text-gray-500 hover:text-primary transition-colors" href="#">Community</a>
+        <a class="text-sm font-medium text-gray-500 hover:text-primary transition-colors" href="#">Support</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        @if (currentUser(); as user) {
+          <a routerLink="/notifications" class="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors relative">
+            <span class="material-symbols-outlined">notifications</span>
+            <span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border border-white"></span>
+          </a>
+          <div class="group relative">
+            <div class="h-9 w-9 rounded-full bg-cover bg-center border border-gray-200 cursor-pointer hover:ring-2 hover:ring-primary/20 transition-all" [style.background-image]="'url(' + user.photoURL + ')'"></div>
+            <div class="absolute top-full right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 hidden group-hover:block animate-fade-in-down">
+              <div class="py-2">
+                <div class="px-4 py-2 border-b border-gray-100">
+                  <p class="text-sm font-semibold text-text-main">{{ user.displayName }}</p>
+                  <p class="text-xs text-text-muted truncate">{{ user.email }}</p>
+                </div>
+                <a href="#" class="block px-4 py-2 text-sm text-text-muted hover:bg-gray-50">My Profile</a>
+                <a (click)="logout()" class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 cursor-pointer">Sign Out</a>
+              </div>
+            </div>
+          </div>
+        } @else {
+           <a [routerLink]="['/login']" class="px-4 py-2 bg-gray-800 hover:bg-black text-white rounded-full text-sm font-semibold transition-colors">
+            Sign In
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</header>
+
+<router-outlet></router-outlet>
+
+<footer class="w-full bg-white border-t border-gray-200 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4">
+    <div class="text-sm text-gray-500">
+      © 2024 HomeHub. AI-Powered Community Lost & Found.
+    </div>
+    <div class="flex gap-6">
+      <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Privacy</a>
+      <a class="text-sm text-gray-500 hover:text-primary transition-colors" href="#">Terms</a>
+      <a class="text-sm text-primary hover:text-blue-700 font-medium transition-colors flex items-center gap-1" href="#">
+        <span class="material-symbols-outlined text-sm">auto_awesome</span>
+        AI Moderation
+      </a>
+    </div>
+  </div>
+</footer>

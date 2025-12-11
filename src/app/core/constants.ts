@@ -1,0 +1,1 @@
+export const PLACEHOLDER_IMAGE_URL = 'https://firebasestorage.googleapis.com/v0/b/pata-lost.firebasestorage.app/o/assets%2Fpatalost.png?alt=media&token=0ff86829-0b30-4425-ad29-8e3d98e3cc89';
